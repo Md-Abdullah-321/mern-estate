@@ -21,7 +21,7 @@ export default function CreateListing() {
     type: "rent",
     bedrooms: 1,
     bathrooms: 1,
-    regularPrice: 50,
+    regulerPrice: 50,
     discountPrice: 0,
     offer: false,
     parking: false,
@@ -270,13 +270,13 @@ export default function CreateListing() {
             <div className="flex items-center gap-2">
               <input
                 type="number"
-                id="regularPrice"
+                id="regulerPrice"
                 min="50"
                 max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg"
                 onChange={handleChange}
-                value={formData.regularPrice}
+                value={formData.regulerPrice}
               />
               <div className="flex flex-col items-center">
                 <p>Regular price</p>
