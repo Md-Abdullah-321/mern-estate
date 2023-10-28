@@ -11,6 +11,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import path from 'path';
 import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import userRouter from './routes/user.route.js';
@@ -32,6 +33,15 @@ app.use(cookieParser());
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/listing', listingRouter);
+
+
+//Serve client:
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 app.listen(3000, () => {
     console.log(`Server is running on port 3000`);
