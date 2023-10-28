@@ -6,6 +6,7 @@ function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
   const [sidebardata, setSitebardate] = useState({
     searchTerm: "",
     type: "all",
@@ -49,12 +50,17 @@ function Search() {
 
     const fetchListings = async () => {
       setLoading(true);
-
+      setShowMore(false);
       const searchQuery = urlParams.toString();
 
       const res = await fetch(`/api/listing/get?${searchQuery}`);
 
       const data = await res.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
       setListings(data);
       setLoading(false);
     };
@@ -108,6 +114,25 @@ function Search() {
 
     navigate(`/search?${searchQuery}`);
   };
+
+  const handleShowMore = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+
+    const res = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await res.json();
+
+    setListings([...listings, ...data]);
+
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+  };
+
+  console.log(listings.length);
   return (
     <div className="flex flex-col md:flex-row">
       {/* left side  */}
@@ -243,6 +268,14 @@ function Search() {
             listings.map((item) => {
               return <ListingItem key={item._id} listing={item} />;
             })}
+          {showMore && (
+            <button
+              className="text-green-700 hover:underline p-7 w-full text-center"
+              onClick={handleShowMore}
+            >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>
