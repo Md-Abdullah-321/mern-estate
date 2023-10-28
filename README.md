@@ -31,7 +31,6 @@ You can access the live version of the website here: [Real Estate Website](https
 - **React Router**: For handling client-side routing.
 - **Redux**: For managing the global state of the application.
 - **Tailwind CSS**: For responsive styling.
-- **Axios**: (You mentioned not using it, so please replace this with the correct library or approach used for making HTTP requests).
 
 ## Getting Started
 To run this project locally, follow the steps below.
